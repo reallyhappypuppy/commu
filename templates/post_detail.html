@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{{ post.title }} - MyCommunity</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-light">
+<div class="container mt-4">
+  <h2>{{ post.title }}</h2>
+  <p>{{ post.content }}</p>
+  <p class="text-muted">작성자: {{ post.user.username }} | {{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+  <div class="mb-3">
+    <a href="/like/{{ post.id }}" class="me-2 text-success"><i class="fa-solid fa-thumbs-up"></i></a> {{ likes_count }}
+    <a href="/dislike/{{ post.id }}" class="me-2 text-danger"><i class="fa-solid fa-thumbs-down"></i></a> {{ dislikes_count }}
+  </div>
+
+  <h4>댓글</h4>
+  <ul class="list-group mb-3">
+    {% for comment in comments %}
+      <li class="list-group-item">
+        <strong>{{ comment.user.username }}</strong> ({{ comment.created_at.strftime('%Y-%m-%d %H:%M') }}):<br>
+        {{ comment.content }}
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% if current_user.is_authenticated %}
+  <form method="POST">
+    <div class="mb-3">
+      <textarea class="form-control" name="content" rows="3" placeholder="댓글 작성" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">댓글 달기</button>
+  </form>
+  {% else %}
+    <p>댓글을 작성하려면 <a href="/login">로그인</a>하세요.</p>
+  {% endif %}
+
+  <a href="/" class="btn btn-secondary mt-3">목록으로 돌아가기</a>
+</div>
+</body>
+</html>
