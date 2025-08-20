@@ -173,7 +173,6 @@ def signup():
 # ================================
 if __name__ == '__main__':
     with app.app_context():
-        db.drop_all()      # 기존 테이블 초기화
         db.create_all()    # 새 테이블 생성
         print("DB와 테이블 초기화 완료")
 
