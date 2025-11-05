@@ -1,66 +1,56 @@
 <!doctype html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="utf-8">
-<title>Kira.co</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
-<style>
-.navbar-brand {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 700;
-    font-size: 1.5rem;
-}
-</style>
+  <meta charset="utf-8">
+  <title>{{ SITE_NAME if SITE_NAME else "REZEnesis" }} — {{ POST_NAME_PLURAL if POST_NAME_PLURAL else "Pebbles" }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">KiraCom</a>
-    <div class="d-flex">
+<body>
+  <nav class="navbar">
+    <a class="navbar-brand" href="/">{{ SITE_NAME if SITE_NAME else "REZEnesis" }}</a>
+    <div class="nav-actions">
       {% if current_user.is_authenticated %}
-        <span class="navbar-text me-3">안녕하세요, {{ current_user.username }}님</span>
-        <a class="btn btn-outline-light btn-sm" href="/logout">로그아웃</a>
+        <span style="color:var(--muted); margin-right:12px;">안녕하세요, <strong style="color:#eaf9f8">{{ current_user.username }}</strong></span>
+        <a class="btn" href="/create">+ Pebble 작성</a>
+        <a class="btn" href="/logout">로그아웃</a>
       {% else %}
-        <a class="btn btn-outline-light btn-sm me-2" href="/login">로그인</a>
-        <a class="btn btn-outline-light btn-sm" href="/signup">회원가입</a>
+        <a class="btn" href="/login">로그인</a>
+        <a class="btn" href="/signup">회원가입</a>
       {% endif %}
     </div>
-  </div>
-</nav>
+  </nav>
 
-<div class="container">
-  <div class="d-flex justify-content-between mb-3">
-    <h2>게시물 목록</h2>
-    {% if current_user.is_authenticated %}
-      <a class="btn btn-primary" href="/create">새 게시물 작성</a>
-    {% endif %}
-  </div>
-  <div class="row row-cols-1 row-cols-md-2 g-4">
-    {% for post in posts %}
-      <div class="col">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title"><a href="/post/{{ post.id }}" class="text-decoration-none">{{ post.title }}</a></h5>
-            <p class="card-text text-truncate">{{ post.content }}</p>
-            <p class="text-muted mb-2">작성자: {{ post.user.username }} | {{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
-            <div class="mb-2">
-              <a href="/like/{{ post.id }}" class="me-2 text-success"><i class="fa-solid fa-thumbs-up"></i></a>
-              <span>{{ likes_counts[post.id] }}</span>
-              <a href="/dislike/{{ post.id }}" class="me-2 text-danger"><i class="fa-solid fa-thumbs-down"></i></a>
-              <span>{{ dislikes_counts[post.id] }}</span>
-            </div>
+  <div class="container">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;">
+      <h2 style="margin:0; color:#eaf9f8">{{ POST_NAME_PLURAL if POST_NAME_PLURAL else "Pebbles" }}</h2>
+      <div style="color:var(--muted); font-size:0.95rem">딥씨 테마 • 최신순</div>
+    </div>
+
+    <div class="grid">
+      {% for post in posts %}
+      <div class="pebble">
+        <div>
+          <div class="title"><a href="/post/{{ post.id }}" style="color:inherit; text-decoration:none">{{ post.title }}</a></div>
+          <div class="excerpt">{{ post.content }}</div>
+        </div>
+
+        <div class="meta">
+          <div class="author">by {{ post.user.username }} · {{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</div>
+          <div class="actions">
+            <a class="icon-btn" href="/like/{{ post.id }}"><i class="fa-solid fa-thumbs-up"></i> <span class="count">{{ likes_counts[post.id] }}</span></a>
+            <a class="icon-btn" href="/dislike/{{ post.id }}"><i class="fa-solid fa-thumbs-down"></i> <span class="count">{{ dislikes_counts[post.id] }}</span></a>
+
             {% if current_user.is_authenticated and (post.user_id == current_user.id or current_user.is_developer) %}
             <form action="/delete_post/{{ post.id }}" method="POST" style="display:inline;">
-                <button class="btn btn-sm btn-danger">삭제</button>
+              <button class="icon-btn" type="submit" style="background:transparent; border:none; padding:6px 8px;"> <i class="fa-solid fa-trash"></i> </button>
             </form>
             {% endif %}
           </div>
         </div>
       </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
   </div>
-</div>
 </body>
 </html>

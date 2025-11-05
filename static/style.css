@@ -1,0 +1,205 @@
+/* static/style.css - REZEnesis deep-sea theme */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;400;600&display=swap');
+
+:root{
+  --bg:#071226; /* deep navy */
+  --panel:#0b2340; /* slightly lighter panel */
+  --accent:#1fb6b2; /* teal accent */
+  --muted:#9fb4c6;
+  --glass: rgba(255,255,255,0.03);
+  --pebble: linear-gradient(145deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: radial-gradient(1200px 400px at 10% 10%, rgba(31,182,178,0.06), transparent 8%),
+              linear-gradient(180deg, var(--bg) 0%, #020613 100%);
+  color:#e6f2f6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* Navbar */
+.navbar{
+  background: linear-gradient(90deg, rgba(5,13,28,0.85), rgba(7,18,34,0.95));
+  padding:12px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.navbar-brand{
+  font-family: 'Pacifico', cursive;
+  color: var(--accent);
+  font-size: 1.85rem;
+  letter-spacing:0.6px;
+  text-decoration:none;
+  text-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+.navbar .nav-actions a{
+  color:var(--muted);
+  text-decoration:none;
+  margin-left:12px;
+  font-weight:600;
+  font-size:0.95rem;
+}
+.navbar .nav-actions a.btn {
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.04);
+  padding:6px 10px;
+  border-radius:8px;
+  transition: all 0.18s ease;
+}
+.navbar .nav-actions a.btn:hover{
+  transform:translateY(-2px);
+  background: rgba(31,182,178,0.06);
+  color:var(--accent);
+}
+
+/* Container */
+.container{
+  max-width:1100px;
+  margin:28px auto;
+  padding:0 18px;
+}
+
+/* Pebble grid */
+.grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fill,minmax(320px,1fr));
+  gap:18px;
+}
+
+/* Pebble card (looks like a stone under deep seawater) */
+.pebble {
+  background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+  border-radius:14px;
+  padding:16px;
+  box-shadow: 0 6px 20px rgba(2,8,20,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.02);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  min-height:140px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.pebble:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 14px 36px rgba(2,8,20,0.75);
+}
+
+/* Title/content */
+.pebble .title{
+  font-size:1.05rem;
+  font-weight:600;
+  color:#e9fbfa;
+  margin-bottom:6px;
+}
+.pebble .excerpt{
+  color:var(--muted);
+  font-size:0.95rem;
+  line-height:1.35;
+  max-height:3.1em;
+  overflow:hidden;
+}
+
+/* meta row */
+.meta {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:12px;
+}
+.meta .author{
+  color:var(--muted);
+  font-size:0.85rem;
+}
+.meta .actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+.icon-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 8px;
+  border-radius:8px;
+  background: rgba(255,255,255,0.01);
+  color:var(--muted);
+  border: 1px solid rgba(255,255,255,0.02);
+  cursor:pointer;
+  font-weight:600;
+}
+.icon-btn:hover{ color: var(--accent); transform: translateY(-2px) }
+
+/* Deep blue badges for counts */
+.count {
+  background: rgba(31,182,178,0.08);
+  color: var(--accent);
+  padding:4px 8px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:0.9rem;
+}
+
+/* Post detail page */
+.post-detail {
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01));
+  border-radius:12px;
+  padding:20px;
+  box-shadow: 0 8px 28px rgba(2,8,20,0.6);
+  border:1px solid rgba(255,255,255,0.02);
+}
+.post-detail h1 { margin:0 0 8px 0; font-size:1.45rem; color:#f5ffff; }
+.post-detail .meta { margin-top:8px; margin-bottom:18px; }
+.post-detail .content { color: #cfeff0; line-height:1.6; font-size:1rem; }
+
+/* Comments */
+.comments { margin-top:18px; display:flex; flex-direction:column; gap:10px; }
+.comment {
+  background: rgba(255,255,255,0.01);
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.02);
+}
+.comment .who { font-weight:700; color:#eaf9f8; margin-bottom:6px; }
+.comment .body { color:var(--muted); font-size:0.95rem; }
+
+/* Forms */
+.form-card {
+  background: rgba(255,255,255,0.01);
+  padding:14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.02);
+  margin-top:14px;
+}
+.input, textarea {
+  width:100%;
+  background: rgba(255,255,255,0.015);
+  border:1px solid rgba(255,255,255,0.02);
+  padding:10px 12px;
+  border-radius:8px;
+  color:#e9fbfa;
+  outline:none;
+}
+button.primary {
+  background: linear-gradient(90deg,var(--accent),#1fe0c6);
+  color:#022026;
+  padding:10px 14px;
+  border-radius:10px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* small screens */
+@media (max-width:600px){
+  .navbar-brand{ font-size:1.5rem; }
+  .grid{ grid-template-columns:1fr; }
+}
