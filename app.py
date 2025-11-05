@@ -225,5 +225,9 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         ensure_developer_account()
-    # 개발용: host 0.0.0.0으로 외부접속 허용
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5001)), debug=True)
+    
+    # 로컬 개발용 실행 (Render 등 배포 환경에서는 gunicorn이 실행함)
+    from waitress import serve  # 또는 gunicorn 사용 시 이 줄은 무시됨
+    print("Running REZEnesis locally with Waitress WSGI server...")
+    serve(app, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+
