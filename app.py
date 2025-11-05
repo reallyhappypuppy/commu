@@ -226,4 +226,4 @@ if __name__ == '__main__':
         db.create_all()
         ensure_developer_account()
     # 개발용: host 0.0.0.0으로 외부접속 허용
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5001)), debug=True)
